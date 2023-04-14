@@ -1,0 +1,57 @@
+import java.util.*;
+
+
+class KClosestPointsToOrigin{
+    public static void main(String args[]){
+        Scanner sc = new Scanner(System.in);
+        int n = sc.nextInt();
+        int k = sc.nextInt();
+        ArrayList<ArrayList<Integer>> points = new ArrayList<ArrayList<Integer>>();
+        for (int i = 0; i < n; i++) {
+            ArrayList<Integer> point = new ArrayList<>();
+            point.add(sc.nextInt());
+            point.add(sc.nextInt());
+            points.add(point);
+        }
+        ArrayList<ArrayList<Integer>> ans = kClosestPointsToOrigin(points, k);
+        for (ArrayList<Integer> point: ans) {
+            System.out.println(point.get(0) + " " + point.get(1));
+        }
+    }
+
+    static ArrayList<ArrayList<Integer>> kClosestPointsToOrigin(ArrayList<ArrayList<Integer>> points, int k){
+               // Create a max heap to store the closest K points
+        PriorityQueue<ArrayList<Integer>> maxHeap = new PriorityQueue<>(new Comparator<ArrayList<Integer>>() {
+            public int compare(ArrayList<Integer> a, ArrayList<Integer> b) {
+                int distA = a.get(0)*a.get(0) + a.get(1)*a.get(1);
+                int distB = b.get(0)*b.get(0) + b.get(1)*b.get(1);
+                return distB - distA;
+            }
+        });
+        
+        // Traverse all the points
+        for (ArrayList<Integer> point : points) {
+            // Add the point to the heap
+            maxHeap.add(point);
+            // If the heap size is greater than K, remove the point with maximum distance from the origin
+            if (maxHeap.size() > k) {
+                maxHeap.remove();
+            }
+        }
+
+
+        // Create an ArrayList of ArrayList to store the result
+        ArrayList<ArrayList<Integer>> result = new ArrayList<>();
+        while (!maxHeap.isEmpty()) {
+            // Add the closest K points to the result
+            ArrayList<Integer> point = maxHeap.remove();
+            result.add(point);
+        }
+        return result;
+
+    }
+
+
+    
+}
+

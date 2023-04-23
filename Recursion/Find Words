@@ -1,0 +1,66 @@
+import java.io.*;
+import java.util.*;
+
+public class WordSearch {
+    public boolean findWords(char[][] board, int num_row, int num_col, int row, int col,String word, int index){
+
+        if(index >= word.length()){
+            return true;
+        }
+
+        if(row < 0 || row >= num_row || col < 0 || col >=num_col || board[row][col]!=word.charAt(index)){
+            return false;
+        }
+
+        char value=board[row][col];
+        board[row][col]='*';
+
+        int rowChangeDir[]={0,0,1,-1};
+        int colChangeDir[]={1,-1,0,0};
+
+        boolean found=false;
+
+        for(int i=0; i<4; i++){
+            int xChange= rowChangeDir[i] + row;
+            int yChange= colChangeDir[i] + col;
+
+            found=findWords(board,num_row,num_col,xChange,yChange,word,index+1);
+
+            if(found == true){
+                return true;
+            }
+        }
+
+        board[row][col]=value;
+        return false;
+    }
+    public boolean exist(char[][] board, String word) {
+        int num_row=board.length;
+        int num_col=board[0].length;
+
+        for(int i=0; i<num_row; i++){
+            for(int j=0; j<num_col; j++){
+                if(findWords(board, num_row, num_col, i, j, word, 0)==true){
+                    return true;
+                }
+            }
+        }
+        return false;
+
+    }
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+        int row = scanner.nextInt();
+        int col = scanner.nextInt();
+        char board[][] = new char [row][col];
+        for(int i = 0 ; i < row ; i++) {
+            for(int j = 0 ; j < col;  j++) {
+                board[i][j] = scanner.next().charAt(0);
+            }
+        }
+        String word = scanner.next();
+        scanner.close();
+        boolean result = new WordSearch().exist(board , word);
+        System.out.println(result);
+    }
+}

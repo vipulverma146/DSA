@@ -1,0 +1,50 @@
+import java.util.*;
+
+public class PalindromePartitioning {
+
+    boolean isPalindrome(String s, int start, int end){
+    while(start <= end){
+      if(s.charAt(start)!= s.charAt(end)){
+        return false;
+      }
+      start++;
+      end--;
+    }
+    return true;
+}
+
+
+    void findPalindrome (int index, String s, ArrayList<String> temp,ArrayList<ArrayList<String>> answer){
+             if(index == s.length()){
+                answer.add(new ArrayList<String>(temp));
+                return;
+             }
+
+             for(int i=index; i<s.length();i++){
+                if(isPalindrome(s,index,i)==true){
+                    temp.add(s.substring(index, i+1));
+                    findPalindrome(i+1,s,temp, answer);
+                    temp.remove(temp.size() -1);
+
+                }
+             }
+ }
+    ArrayList<ArrayList<String>> palindromePartitioning(String s) {
+        ArrayList<ArrayList<String>> result = new ArrayList<ArrayList<String>>();
+        ArrayList<String> temp = new ArrayList<String>();
+        findPalindrome(0,s, temp, result);
+        return result;
+    }
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+        String s = scanner.next();
+        ArrayList<ArrayList<String> > result = new PalindromePartitioning().palindromePartitioning(s);
+        for(int i = 0 ; i < result.size() ; i++) {
+            for(int j = 0 ; j < result.get(i).size() ; j++) {
+                System.out.print(result.get(i).get(j) + " ");
+            }
+            System.out.println();
+        }
+        scanner.close();
+    }
+}

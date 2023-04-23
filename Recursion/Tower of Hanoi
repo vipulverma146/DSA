@@ -1,0 +1,31 @@
+import java.util.*;
+
+public class TowerOfHanoi {
+    // Implement your solution here
+    ArrayList<String> moves=new ArrayList<>();
+
+    void towerOfHanoiRecursion(int n, char A,char C, char B){
+        if(n==0){
+            return;
+        }
+
+        towerOfHanoiRecursion(n-1, A,B,C);
+        String value=String.valueOf(n) +' ' + A + ' ' + C;
+        moves.add(value);
+        towerOfHanoiRecursion(n-1,B,C,A);
+    }
+    ArrayList<String> towerOfHanoi(int n) {
+        ArrayList<String>movement=new ArrayList<>();
+        moves=movement;
+        towerOfHanoiRecursion(n,'A','C','B');
+        return moves;
+    }
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+        int n = scanner.nextInt();
+        ArrayList<String> result = new TowerOfHanoi().towerOfHanoi(n);
+        for(int i = 0 ; i < result.size() ; i++) {
+            System.out.println(result.get(i));
+        }
+    }
+}

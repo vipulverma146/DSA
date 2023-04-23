@@ -1,0 +1,65 @@
+import java.util.*;
+
+class CombinationSum{
+    public static void main(String args[]){
+        Scanner sc = new Scanner(System.in);
+        int n = sc.nextInt();
+        int target = sc.nextInt();
+        int[] candidates = new int[n];
+        for(int i=0;i<n;i++){
+            candidates[i] = sc.nextInt();
+        }
+        List<List<Integer>>res = combinationSum(candidates, target);
+        if(res.size()==0){
+            System.out.println("NA\n");
+        }
+        else{
+            for(int i=0;i<res.size();i++){
+                for(int j=0;j<res.get(i).size();j++){
+                    System.out.print(res.get(i).get(j)+" ");
+                }
+                System.out.print("\n");
+            }
+        }
+        sc.close();
+    }
+
+    public static void getTargetCombination(int[] candidates, int position, int currentTarget, List<Integer> tempList,List<List<Integer>>resultList) {
+
+            if (currentTarget == 0) {
+            resultList.add(new ArrayList<>(tempList));
+            return;
+            } 
+
+            if (position == candidates.length) {
+            return;
+        }
+
+
+            for (int i = position; i < candidates.length; i++) { 
+            if ((currentTarget-candidates[i]) >= 0){
+ 
+                tempList.add(candidates[i]);
+                //currentTarget-=candidates[i];
+ 
+                getTargetCombination(candidates,i,currentTarget-candidates[i],tempList,
+                            resultList);
+                tempList.remove(tempList.size() - 1);
+            }
+            }
+        }
+
+    
+
+    static List<List<Integer>> combinationSum(int[] candidates, int target) {
+        Arrays.sort(candidates);
+        List<List<Integer>> resultList = new ArrayList<>();
+        List<Integer> tempList=new ArrayList<>();
+
+        getTargetCombination(candidates,0,target,tempList,resultList);
+        return resultList;
+
+    }
+    
+
+}

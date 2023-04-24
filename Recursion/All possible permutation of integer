@@ -1,0 +1,52 @@
+import java.io.*;
+import java.util.*;
+
+class Permutation {
+    public List<List<Integer>> permutation(int[] nums) {
+        List<List<Integer>> ansList=new ArrayList<>();
+        List<Integer> tempList=new ArrayList<>();
+
+        possiblePermutation(0,ansList,tempList,nums);
+        return ansList;
+
+    }
+
+
+    public void possiblePermutation(int startIndex,List<List<Integer>> ansList, List<Integer>tempList, int nums[]){
+
+        if(tempList.size()==nums.length){
+            ansList.add(new ArrayList<>(tempList));
+        }
+            for(int i=0; i<nums.length; i++){
+                if(tempList.contains(nums[i])){
+                    continue;
+                }else{
+                    tempList.add(nums[i]);
+                }
+
+                possiblePermutation(i+1,ansList,tempList,nums);
+                tempList.remove(tempList.size()-1);
+            }
+        
+    }
+
+    public static void main(String args[]) throws IOException{
+        Scanner scanner = new Scanner(System.in);
+        int n = scanner.nextInt();
+        int nums[] = new int[n];
+        for(int i = 0 ; i < n ;i++) {
+            nums[i] = scanner.nextInt();
+        }
+
+        List<List<Integer>> result = new Permutation().permutation(nums);
+        
+        BufferedWriter output = new BufferedWriter(new OutputStreamWriter(System.out));
+        for (int i = 0; i < result.size(); ++i) {
+            for (int j = 0; j < result.get(i).size(); ++j) {
+                output.write(result.get(i).get(j)+" ");
+            }
+            output.write("\n");
+        }
+        output.flush();
+    }
+}

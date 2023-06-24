@@ -1,0 +1,26 @@
+/*
+  arr[]= {10,20,20,20,30,30,30,30,30,40}
+  o/p= {10,20,30,40,-, - , - , - , - }
+  size= 4
+
+*/
+
+int removeDuplicate(int arr[], int n){
+    if( n < 2){
+         return n;
+      }
+
+    int i=0;
+    int j=0;
+
+   while( j < n){
+       if(arr[i] != arr[j]){
+           i++;
+         arr[i]=arr[j];
+         j++;
+         }
+     j++;
+
+     }
+  return i+1;
+  }

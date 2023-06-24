@@ -1,0 +1,29 @@
+/*
+  arr[]={8,5,0,10,0,20}
+  o/p={8,5,10,20,0,0}
+
+*/
+
+int[] moveZero( int [] arr, int n){
+   if(n < 2)
+   {
+     return arr;
+   }
+int i=0;
+int j=0;
+
+while(j < n)
+{
+ if(arr[j] != 0){
+    ++j;
+}else{
+    int temp= arr[i];
+   arr[i]=arr[j];
+   arr[j]=temp;
+   i++;
+   j++;
+}
+}
+return arr;
+}
+   

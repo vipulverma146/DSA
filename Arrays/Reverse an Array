@@ -1,0 +1,26 @@
+
+/* 
+   arr[]={10,5,7,30}
+   o/p= {30,7,5,10}
+
+*/
+
+
+int[] reverseArray(int [] arr, int n){
+
+       if(n < 2){
+           return arr;
+         }
+
+        int start=0;
+        int end= n-1;
+  
+       while(start < end){
+             int temp=arr[start];
+             arr[start]=arr[end];
+             arr[end]=temp;
+             start++;
+             end--;
+     }
+     return arr;
+  }
